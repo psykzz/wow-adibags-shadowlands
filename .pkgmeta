@@ -5,4 +5,4 @@ enable-nolib-creation: no
 ignore:
   - README.md
 
-license-output: LICENSE.txt
+license-output: LICENSE
