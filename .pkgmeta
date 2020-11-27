@@ -1,0 +1,8 @@
+package-as: Adibags_Shadowlands
+
+enable-nolib-creation: no
+
+ignore:
+  - README.md
+
+license-output: LICENSE.txt
