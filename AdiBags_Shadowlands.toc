@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 90002
 ## Title: AdiBags - Shadowlands Covenant items
 ## Version: 1.0
 ## Author: PsyKzz
