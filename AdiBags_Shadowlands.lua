@@ -24,7 +24,6 @@ function covenantFilter:OnInitialize()
 end
 
 function covenantFilter:Update()
-	MatchIDs = nil
 	self:SendMessage("AdiBags_FiltersChanged")
 end
 
