@@ -18,7 +18,8 @@ function covenantFilter:OnInitialize()
     self.db = AdiBags.db:RegisterNamespace("Covenant Items", {
         profile = {
             anima = true,
-            conduits = true,
+			conduits = true,
+			covenantCrafting = true,
 		}
 	})
 end
@@ -44,8 +45,25 @@ function covenantFilter:Filter(slotData)
     local item = GetContainerItemLink(slotData.bag, slotData.slot)
     if self.db.profile.anima and C_Item.IsAnimaItemByID(item) then
         return "Anima"
+	end
+	
+
+	local KyrianCraftingItems = {
+		[180477] = true, -- feathers
+		[180595] = true, -- steel
+		[180594] = true, -- bone
+		[180478] = true, -- pelt
+		[178995] = true, -- shard
+	}
+
+	local NecrolordCraftingItems = {
+		[178061] = true, -- mallable flesh
+	}
+
+	local item = GetContainerItemLink(slotData.bag, slotData.slot)
+    if self.db.profile.covenantCrafting and (KyrianCraftingItems[slotData.itemId] or NecrolordCraftingItems[slotData.itemId]) then
+        return "Covenant Crafting"
     end
-    
 end
 
 function covenantFilter:GetOptions()
@@ -61,6 +79,12 @@ function covenantFilter:GetOptions()
 			desc = "Items used at the Soul Forge.",
 			type = "toggle",
 			order = 20
+		},
+		covenantCrafting = {
+			name = "Covenant Crafting items",
+			desc = "Items used at for specific convenant.",
+			type = "toggle",
+			order = 30
 		}
 	},
 	AdiBags:GetOptionHandler(self, false, function ()
