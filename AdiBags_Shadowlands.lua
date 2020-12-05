@@ -58,6 +58,17 @@ function covenantFilter:Filter(slotData)
 
 	local NecrolordCraftingItems = {
 		[178061] = true, -- mallable flesh
+		[183744] = true, -- superior parts
+	}
+
+	local NightFaeCraftingItems = {
+		[178881] = true, -- dutiful soul
+		[178874] = true, -- martial soul
+		[177698] = true, -- untamed soul
+		[178882] = true, -- pridful soul
+		
+		[176832] = true, -- wildsedd root grain
+		[176922] = true, -- wild nightbloom
 	}
 
 	local item = GetContainerItemLink(slotData.bag, slotData.slot)
