@@ -32,7 +32,7 @@ end
 function mod:UpdateButton(event, button)
 	local enabled = self.db.profile.conduits and self.db.profile.highlight ~= "none"
 	local isBankButton = AdiBags.BAG_IDS.BANK[button.bag]
-	local soulbindFrameShown = SoulbindViewer:IsShown()
+	local soulbindFrameShown = SoulbindViewer and SoulbindViewer:IsShown()
 	if (not enabled) or (isBankButton) or (not soulbindFrameShown) then return end
 
 	local itemLoc = ItemLocation:CreateFromBagAndSlot(button.bag, button.slot)
