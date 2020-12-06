@@ -80,17 +80,29 @@ function mod:Filter(slotData)
 	}
 
 	local NightFaeCraftingItems = {
-		[178881] = true, -- dutiful soul
-		[178874] = true, -- martial soul
-		[177698] = true, -- untamed soul
-		[178882] = true, -- pridful soul
+		[178879] = true, -- divine dutiful spirit
+		[178880] = true, -- greater dutiful spirit
+		[178881] = true, -- dutiful spirit
 		
-		[176832] = true, -- wildsedd root grain
+		[178874] = true, -- martial spirit
+		[178877] = true, -- greater martial spirit
+		[178878] = true, -- divine martial spirit
+
+		[177698] = true, -- untamed spirit
+		[177699] = true, -- greater untamed spirit
+		[177700] = true, -- divine untamed spirit
+
+		[178882] = true, -- prideful spirit
+		[178883] = true, -- greater prideful spirit
+		[178884] = true, -- divine prideful spirit
+		
+		[176832] = true, -- wildseed root grain
+		[176922] = true, -- temporal leaves
 		[176922] = true, -- wild nightbloom
 	}
 
 	local item = GetContainerItemLink(slotData.bag, slotData.slot)
-    if self.db.profile.covenantCrafting and (KyrianCraftingItems[slotData.itemId] or NecrolordCraftingItems[slotData.itemId]) then
+    if self.db.profile.covenantCrafting and (KyrianCraftingItems[slotData.itemId] or NecrolordCraftingItems[slotData.itemId] or NightFaeCraftingItems[slotData.itemId]) then
         return "Covenant Crafting"
     end
 end
