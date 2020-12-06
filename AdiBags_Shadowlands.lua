@@ -7,36 +7,54 @@ Adds a new filter for Anima and Conduit items
 
 local addonName, addon = ...
 local AdiBags = LibStub("AceAddon-3.0"):GetAddon("AdiBags")
+local LCG = LibStub('LibCustomGlow-1.0')
 
-local L = addon.L
+local mod = AdiBags:RegisterFilter("Shadowlands - Covenant Items", 100, "ABEvent-1.0")
+mod.uiName = "Shadowlands - Covenant Items"
+mod.uiDesc = "Separate out different Shadowlands items, like Anima and Conduits."
 
-local covenantFilter = AdiBags:RegisterFilter("Shadowlands - Covenant Items", 100, "ABEvent-1.0")
-covenantFilter.uiName = "Shadowlands - Covenant Items"
-covenantFilter.uiDesc = "Separate out different Shadowlands items, like Anima and Conduits."
-
-function covenantFilter:OnInitialize()
+function mod:OnInitialize()
     self.db = AdiBags.db:RegisterNamespace("Covenant Items", {
         profile = {
             anima = true,
 			conduits = true,
 			covenantCrafting = true,
+			highlight = "pixel",
+			glowColor = { 1, 1, 0.0, 0.7 },
 		}
 	})
 end
 
-function covenantFilter:Update()
+function mod:Update()
 	self:SendMessage("AdiBags_FiltersChanged")
 end
 
-function covenantFilter:OnEnable()
+function mod:UpdateButton(event, button)
+	local enabled = self.db.profile.conduits and self.db.profile.highlight ~= "none"
+	local isBankButton = AdiBags.BAG_IDS.BANK[button.bag]
+	local soulbindFrameShown = SoulbindViewer:IsShown()
+	if (not enabled) or (isBankButton) or (not soulbindFrameShown) then return end
+
+	local itemLoc = ItemLocation:CreateFromBagAndSlot(button.bag, button.slot)
+	if (not itemLoc:IsValid()) then return end
+	
+	local isConduit = C_Item.IsItemConduit(itemLoc)
+
+	-- only pixel / particle supported
+	self:ShowPixelGlow(button, isConduit and self.db.profile.highlight == "pixel")
+	self:ShowParticleGlow(button, isConduit and self.db.profile.highlight == "particle")
+end
+
+function mod:OnEnable()
+	AdiBags:UpdateFilters()
+	self:RegisterMessage('AdiBags_UpdateButton', 'UpdateButton')
+end
+
+function mod:OnDisable()
 	AdiBags:UpdateFilters()
 end
 
-function covenantFilter:OnDisable()
-	AdiBags:UpdateFilters()
-end
-
-function covenantFilter:Filter(slotData)
+function mod:Filter(slotData)
     local itemLoc = ItemLocation:CreateFromBagAndSlot(slotData.bag, slotData.slot)
     if self.db.profile.conduits and C_Item.IsItemConduit(itemLoc) then 
         return "Conduit"
@@ -77,7 +95,7 @@ function covenantFilter:Filter(slotData)
     end
 end
 
-function covenantFilter:GetOptions()
+function mod:GetOptions()
 	return {
 		anima = {
 			name = "Anima",
@@ -96,9 +114,53 @@ function covenantFilter:GetOptions()
 			desc = "Items used at for specific convenant.",
 			type = "toggle",
 			order = 30
-		}
+		},
+		highlight = {
+			name = "Highlight style",
+			type = 'select',
+			order = 40,
+			width = 'double',
+			values = {
+				none = "None",
+				pixel = "Pixel",
+				particle = "Particle"
+			}
+		},
+		glowColor = {
+			name = "Highlight color",
+			type = 'color',
+			order = 50,
+			hasAlpha = true,
+			disabled = function()
+				return mod.db.profile.highlight == "none"
+			end,
+		},
 	},
 	AdiBags:GetOptionHandler(self, false, function ()
 		return self:Update()
 	end)
+end
+
+
+-- Glows
+--------------------------------------------------------------------------------
+-- Pixel glow
+--------------------------------------------------------------------------------
+function mod:ShowPixelGlow(button, enable)
+	if enable then
+		LCG.PixelGlow_Start(button, mod.db.profile.glowColor, nil, -0.25, nil, 2, 1, 0)
+	else
+		LCG.PixelGlow_Stop(button)
+	end
+end
+
+--------------------------------------------------------------------------------
+-- Particle glow
+--------------------------------------------------------------------------------
+function mod:ShowParticleGlow(button, enable)
+	if enable then
+		LCG.AutoCastGlow_Start(button, mod.db.profile.glowColor, 6, -0.25, 1.5)
+	else
+		LCG.AutoCastGlow_Stop(button)
+	end
 end
