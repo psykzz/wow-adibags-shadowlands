@@ -71,7 +71,8 @@ function mod:Filter(slotData)
 		[180595] = true, -- steel
 		[180594] = true, -- bone
 		[180478] = true, -- pelt
-		[178995] = true, -- shard
+		[178995] = true, -- soul shard
+		[179378] = true, -- soul mirror
 	}
 
 	local NecrolordCraftingItems = {
