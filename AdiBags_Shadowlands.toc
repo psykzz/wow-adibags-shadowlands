@@ -7,4 +7,8 @@
 ## X-Category: Bags & Inventory
 ## Dependencies: AdiBags
 
+# libs
+libs\LibCustomGlow-1.0\LibCustomGlow-1.0.lua
+
+# core
 AdiBags_Shadowlands.lua
