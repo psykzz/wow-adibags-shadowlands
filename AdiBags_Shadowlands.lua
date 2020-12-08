@@ -63,46 +63,46 @@ function mod:Filter(slotData)
     local item = GetContainerItemLink(slotData.bag, slotData.slot)
     if self.db.profile.anima and C_Item.IsAnimaItemByID(item) then
         return "Anima"
-	end
-	
+    end
 
-	local KyrianCraftingItems = {
-		[180477] = true, -- feathers
-		[180595] = true, -- steel
-		[180594] = true, -- bone
-		[180478] = true, -- pelt
-		[178995] = true, -- soul shard
-		[179378] = true, -- soul mirror
-	}
 
-	local NecrolordCraftingItems = {
-		[178061] = true, -- mallable flesh
-		[183744] = true, -- superior parts
-	}
+    local KyrianCraftingItems = {
+        [180477] = true, -- feathers
+        [180595] = true, -- steel
+        [180594] = true, -- bone
+        [180478] = true, -- pelt
+        [178995] = true, -- soul shard
+        [179378] = true, -- soul mirror
+    }
 
-	local NightFaeCraftingItems = {
-		[178879] = true, -- divine dutiful spirit
-		[178880] = true, -- greater dutiful spirit
-		[178881] = true, -- dutiful spirit
-		
-		[178874] = true, -- martial spirit
-		[178877] = true, -- greater martial spirit
-		[178878] = true, -- divine martial spirit
+    local NecrolordCraftingItems = {
+        [178061] = true, -- mallable flesh
+        [183744] = true, -- superior parts
+    }
 
-		[177698] = true, -- untamed spirit
-		[177699] = true, -- greater untamed spirit
-		[177700] = true, -- divine untamed spirit
+    local NightFaeCraftingItems = {
+        [178879] = true, -- divine dutiful spirit
+        [178880] = true, -- greater dutiful spirit
+        [178881] = true, -- dutiful spirit
 
-		[178882] = true, -- prideful spirit
-		[178883] = true, -- greater prideful spirit
-		[178884] = true, -- divine prideful spirit
-		
-		[176832] = true, -- wildseed root grain
-		[176922] = true, -- temporal leaves
-		[176922] = true, -- wild nightbloom
-	}
+        [178874] = true, -- martial spirit
+        [178877] = true, -- greater martial spirit
+        [178878] = true, -- divine martial spirit
 
-	local item = GetContainerItemLink(slotData.bag, slotData.slot)
+        [177698] = true, -- untamed spirit
+        [177699] = true, -- greater untamed spirit
+        [177700] = true, -- divine untamed spirit
+
+        [178882] = true, -- prideful spirit
+        [178883] = true, -- greater prideful spirit
+        [178884] = true, -- divine prideful spirit
+
+        [176832] = true, -- wildseed root grain
+        [176922] = true, -- temporal leaves
+        [176922] = true, -- wild nightbloom
+    }
+
+    local item = GetContainerItemLink(slotData.bag, slotData.slot)
     if self.db.profile.covenantCrafting and (KyrianCraftingItems[slotData.itemId] or NecrolordCraftingItems[slotData.itemId] or NightFaeCraftingItems[slotData.itemId]) then
         return "Covenant Crafting"
     end
