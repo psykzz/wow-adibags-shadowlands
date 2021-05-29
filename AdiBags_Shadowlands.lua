@@ -1,8 +1,7 @@
 --[[
-AdiBags - Shadowlands item filter
-by PsyKzz
-version: v1.0
-Adds a new filter for Anima and Conduit items
+	AdiBags - Shadowlands item filter by PsyKzz
+	version: v1.0
+	Adds a new filter for Anima and Conduit items
 ]]
 
 local addonName, addon = ...
